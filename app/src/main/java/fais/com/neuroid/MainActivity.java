@@ -30,10 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_start)
     public void startNetworkTraining(){
+        // Executor jest po to, zeby walnac operacje w osobnym watku
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(new Runnable() {
             @Override
             public void run() {
+                // tworzymy siec z 3 warstw, 4 neuronami w kazdej, i dajemy callbacki, zebysmy mogli reagowac na wydarzenia
                 network = new NeuralNetwork(3, 4, new NeuralNetwork.NeuralNetworkCallbacks() {
                     @Override
                     public void onStartTraining(String msg) {
@@ -60,8 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+                // dodajemy nowy pattern do datasetu
                 TrainDataSet dataset = new TrainDataSet();
                 dataset.add(new DataVector(new double[]{1, 1, 0, 0}));
+                // zapuszczamy uczenie. -1 oznacza, ze bedzie while w kolko chodzilo
                 network.train(0.001, -1, dataset);
             }
         });
