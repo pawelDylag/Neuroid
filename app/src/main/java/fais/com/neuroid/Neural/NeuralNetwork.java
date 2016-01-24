@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
 
 import fais.com.neuroid.Neural.Data.DataVector;
 import fais.com.neuroid.Neural.Data.ErrorMatrix;
@@ -80,6 +81,7 @@ public class NeuralNetwork {
 
     public double train(double minError, int maxLoops, TrainDataSet trainDataSet) {
         double finalError = Double.MAX_VALUE;
+        long logTime = System.currentTimeMillis();
         DataVector finalOutput = null;
         int loopCounter = 0;
         LastNeuronLayer lnl = (LastNeuronLayer) layers.get(numberOfLayers - 1);
@@ -91,7 +93,10 @@ public class NeuralNetwork {
             DataVector trainData = trainDataSet.nextRandom();
             // puszczamy raz siec
             finalOutput = this.generateOutput(trainData);
-            callback.onTrainingProgress("Progress ", finalOutput);
+            if (System.currentTimeMillis() - logTime > 1000l){
+                callback.onTrainingProgress("Progress ", finalOutput);
+                logTime = System.currentTimeMillis();
+            }
             // obliczamy blad
             finalError = calculateError(trainData, finalOutput);
             // sprawdzamy warunek wyjscia

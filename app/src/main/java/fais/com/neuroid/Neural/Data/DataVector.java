@@ -36,4 +36,8 @@ public class DataVector {
                 "data=" + Arrays.toString(data) +
                 '}';
     }
+
+    public String toUIString() {
+        return Arrays.toString(data);
+    }
 }
