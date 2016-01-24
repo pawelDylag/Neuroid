@@ -1,7 +1,12 @@
 package fais.com.neuroid.Neural;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import fais.com.neuroid.Neural.Data.ErrorMatrix;
 
 /**
  * Created by paweldylag on 21/01/16.
@@ -66,12 +71,12 @@ public class NeuronLayer {
             double neuronError = learningOffset * n.getLastOutput() * (1 - n.getLastOutput()) * previousLayerErrors.getSumOfColumn(i);
             // tutaj generujemy sum(wi*di), zeby kolejna warstwa miala latwiej :)
             // i przy okazji updateujemy wage tego neurona
-            for (int j = 0; j < thisLayerErrors.getSize(); j++) {
+            for (int j = 0; j < size; j++) {
                 double sum = neuronError * n.getWeights()[j];
                 // set(kolumna dla tego neurona, jego kolejna suma, wartosc tej sumy)
                 thisLayerErrors.set(i, j, sum);
                 // Ok, jak juz wygenerowalismy wartosc do macierzy bledow dla poprzedniej warstwy, to teraz poprawiamy wage w tej warstwie
-                n.getWeights()[j] = learningOffset * neuronError * n.getLastInput()[j];
+                n.addErrorToWeight(j, learningOffset * neuronError * n.getLastInput()[j]);
             }
         }
         return thisLayerErrors;

@@ -1,4 +1,4 @@
-package fais.com.neuroid.Neural;
+package fais.com.neuroid.Neural.Data;
 
 import java.util.Arrays;
 

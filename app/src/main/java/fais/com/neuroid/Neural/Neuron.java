@@ -1,6 +1,9 @@
 package fais.com.neuroid.Neural;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -55,6 +58,7 @@ public class Neuron {
      *  sumuje iloczyny wag i wejsc
      */
     private double sumInputs(double[] inputs) {
+        //Log.d("NEURON", "inputs: " + Arrays.toString(inputs) + " , weights: " + Arrays.toString(weights));
         double sum = 0;
         for (int i = 0; i < weights.length; i++) {
             sum += inputs[i] * weights[i];
@@ -75,6 +79,13 @@ public class Neuron {
      */
     public double[] getWeights() {
         return weights;
+    }
+
+    /**
+     * Zwraca aktualne wartosci wag
+     */
+    public void addErrorToWeight(int index, double value) {
+        this.weights[index] += value;
     }
 
     /**

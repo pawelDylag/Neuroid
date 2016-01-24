@@ -1,4 +1,6 @@
-package fais.com.neuroid.Neural;
+package fais.com.neuroid.Neural.Data;
+
+import java.util.Arrays;
 
 /**
  * Klasa trzymajaca wektor danych wejsciowych do sieci neuronowej.
@@ -7,13 +9,14 @@ package fais.com.neuroid.Neural;
  */
 public class DataVector {
 
-    protected final double[] data;
+    protected double[] data;
     protected final int size;
 
     public DataVector(double[] data) {
         this.data = data;
         this.size = data.length;
     }
+
 
     public double[] getData() {
         return data;
@@ -25,5 +28,12 @@ public class DataVector {
 
     public double get(int index) {
         return this.data[index];
+    }
+
+    @Override
+    public String toString() {
+        return "DataVector{" +
+                "data=" + Arrays.toString(data) +
+                '}';
     }
 }
