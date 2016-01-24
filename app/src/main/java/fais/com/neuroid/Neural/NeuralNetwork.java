@@ -26,10 +26,21 @@ public class NeuralNetwork {
     private final int numberOfNeuronsInEachLayer;
     private final List<NeuronLayer> layers;
 
-    public NeuralNetwork(int numberOfLayers, int numberOfNeuronsInEachLayer) {
+    private final NeuralNetworkCallbacks callback;
+
+    /** Callbacs for informing about network state and progress */
+    public interface NeuralNetworkCallbacks {
+        void onStartTraining(String msg);
+        void onTrainingProgress(String msg, DataVector data);
+        void onFinishTraining(String msg, DataVector data);
+        void onError(String message);
+    }
+
+    public NeuralNetwork(int numberOfLayers, int numberOfNeuronsInEachLayer, NeuralNetworkCallbacks callback) {
         this.numberOfLayers = numberOfLayers;
         this.numberOfNeuronsInEachLayer = numberOfNeuronsInEachLayer;
         this.layers = new ArrayList<>();
+        this.callback = callback;
         this.init();
     }
 
@@ -80,7 +91,7 @@ public class NeuralNetwork {
             DataVector trainData = trainDataSet.nextRandom();
             // puszczamy raz siec
             finalOutput = this.generateOutput(trainData);
-            Log.d(TAG, "Train in progress -> " + finalOutput.toString());
+            callback.onTrainingProgress("Progress ", finalOutput);
             // obliczamy blad
             finalError = calculateError(trainData, finalOutput);
             // sprawdzamy warunek wyjscia
@@ -98,7 +109,7 @@ public class NeuralNetwork {
         changeState(Neuron.STATE.NORMAL);
         // wypisujemy info
         if (finalOutput != null) {
-            Log.d(TAG, "Train result -> " + finalOutput.toString());
+           callback.onFinishTraining("Finished", finalOutput);
         }
         return finalError;
     }

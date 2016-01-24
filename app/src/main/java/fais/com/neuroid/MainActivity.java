@@ -20,9 +20,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        NeuralNetwork network = new NeuralNetwork(3, 4);
+        NeuralNetwork network = new NeuralNetwork(3, 4, new NeuralNetwork.NeuralNetworkCallbacks() {
+            @Override
+            public void onStartTraining(String msg) {
+
+            }
+
+            @Override
+            public void onTrainingProgress(String msg, DataVector data) {
+
+            }
+
+            @Override
+            public void onFinishTraining(String msg, DataVector data) {
+
+            }
+
+            @Override
+            public void onError(String message) {
+
+            }
+        });
         TrainDataSet dataset = new TrainDataSet();
         dataset.add(new DataVector(new double[]{1,1,0,0}));
-        network.train(0.001, -1, dataset);
+        dataset.add(new DataVector(new double[]{1,0,0,0}));
+        network.train(0.05, -1, dataset);
     }
 }
