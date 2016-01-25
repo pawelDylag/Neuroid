@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

@@ -3,6 +3,7 @@ package fais.com.neuroid.presentation;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -11,9 +12,13 @@ import android.view.animation.GridLayoutAnimationController;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
-
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,5 +183,22 @@ public class AndroidOutputProvider {
         }
     }
 
+    public void writeToFile(String data, Context context) {
 
+        try {
+            File myFile = new File("/sdcard/neuroid_data.txt");
+            myFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.write(data);
+            myOutWriter.close();
+            fOut.close();
+            Toast.makeText(context,
+                    "Done writing SD 'mysdfile.txt'",
+                    Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }

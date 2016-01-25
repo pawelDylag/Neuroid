@@ -16,9 +16,12 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import fais.com.neuroid.Neural.Data.DataVector;
 import fais.com.neuroid.R;
 import fais.com.neuroid.presentation.AndroidOutputProvider;
 import fais.com.neuroid.utilities.Util;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.activity_game_grid_view)
     GridView gridView;
 
+    private ArrayList<DataVector> list = new ArrayList<>();
 
     AndroidOutputProvider outputProvider;
 
@@ -99,16 +103,24 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.clear_button)
     public void clearClick(View v) {
+        list.add(new DataVector(outputProvider.getPointsTable()));
         outputProvider.clearPointsList();
         initGame();
+        Toast.makeText(getApplicationContext(), "Added data to file", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.go_button)
     public void goClick(View v) {
         if (!outputProvider.getPointsList().isEmpty()) {
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+            /*Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra(LIST_KEY, outputProvider.getPointsTable());
-            startActivity(intent);
+            startActivity(intent);*/
+            StringBuilder stringBuilder = new StringBuilder();
+            for (DataVector dataVector : list) {
+                for (int i = 0; i < dataVector.getSize(); i++)
+                    stringBuilder.append(dataVector.get(i) + ",");
+            }
+            outputProvider.writeToFile(stringBuilder.toString(), getApplicationContext());
         } else {
             Toast.makeText(getApplicationContext(), "Draw something!", Toast.LENGTH_SHORT).show();
         }
