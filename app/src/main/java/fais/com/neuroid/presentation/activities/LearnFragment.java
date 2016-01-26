@@ -16,7 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -58,6 +64,7 @@ public class LearnFragment extends Fragment {
     public LearnFragment() {
         // Required empty public constructor
     }
+
     public static LearnFragment newInstance() {
         LearnFragment fragment = new LearnFragment();
         return fragment;
@@ -73,7 +80,7 @@ public class LearnFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_learn, container, false);
+        View view = inflater.inflate(R.layout.fragment_learn, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -93,8 +100,8 @@ public class LearnFragment extends Fragment {
     @OnClick(R.id.button_learn)
     public void startLearning() {
         // sprawdzamy, czy siec sie nie uczy w tej chwili
-        NeuralNetwork oldNetwork = ((MainActivity)getActivity()).getNeuralNetwork();
-        if(oldNetwork != null && oldNetwork.getState() == Neuron.STATE.LEARNING) {
+        NeuralNetwork oldNetwork = ((MainActivity) getActivity()).getNeuralNetwork();
+        if (oldNetwork != null && oldNetwork.getState() == Neuron.STATE.LEARNING) {
             return;
         }
         double sumOffset = Double.parseDouble(offset1.getText().toString());
@@ -146,13 +153,13 @@ public class LearnFragment extends Fragment {
             }
         });
 
+
+        // ustawiamy w aktywnosci ta siec
+        ((MainActivity) getActivity()).setNeuralNetwork(network);
+
         network.setActivationOffset(activationOffset);
         network.setLearningOffset(learningOffset);
         network.setSumOffset(sumOffset);
-
-        // ustawiamy w aktywnosci ta siec
-        ((MainActivity)getActivity()).setNeuralNetwork(network);
-
         // pobieramy dane z UI
         final TrainDataSet dataset = new TrainDataSet(2);
         if (data1.isChecked()) {
@@ -172,7 +179,7 @@ public class LearnFragment extends Fragment {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                network.train(0.01, -1, dataset);
+                network.train(0.005, -1, dataset);
             }
         });
     }

@@ -113,7 +113,9 @@ public class RecognitionFragment extends Fragment {
 
     @OnClick(R.id.go_button)
     public void goClick(View v) {
-        if (((MainActivity)getActivity()).getNeuralNetwork().getState() == Neuron.STATE.LEARNING) {
+        if (((MainActivity)getActivity()).getNeuralNetwork()  == null) {
+            Toast.makeText(getActivity(), "You need to learn network first.", Toast.LENGTH_SHORT).show();
+        } else if (((MainActivity)getActivity()).getNeuralNetwork().getState() == Neuron.STATE.LEARNING) {
             Toast.makeText(getActivity(), "Network is still learning!", Toast.LENGTH_SHORT).show();
         } else {
             DataVector output = ((MainActivity)getActivity()).getNeuralNetwork().generateOutput(new DataVector(outputProvider.getPointsTable()));
