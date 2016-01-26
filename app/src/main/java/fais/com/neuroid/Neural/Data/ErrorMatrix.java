@@ -11,41 +11,54 @@ import java.util.Arrays;
 public class ErrorMatrix {
 
     private double[][] errors;
-    private final int size;
+    private final int columns;
+    private final int rows;
 
     public ErrorMatrix(int size) {
-        this.size = size;
+        this.columns = size;
+        this.rows = size;
         errors = new double[size][size];
     }
 
+    public ErrorMatrix(int columns, int rows) {
+        this.columns = columns;
+        this.rows = rows;
+        errors = new double[columns][rows];
+    }
+
     public double get(int x, int y) {
-        if (x >= size || x < 0) throw new IndexOutOfBoundsException("Value x: " + x + " is out of matrix bounds.");
-        if (y >= size|| y < 0) throw new IndexOutOfBoundsException("Value y: " + y + " is out of matrix bounds.");
+        if (x >= columns || x < 0) throw new IndexOutOfBoundsException("Value x: " + x + " is out of matrix bounds.");
+        if (y >= rows|| y < 0) throw new IndexOutOfBoundsException("Value y: " + y + " is out of matrix bounds.");
         return errors[x][y];
     }
 
     public void set(int x, int y, double value) {
-        if (x >= size || x < 0) throw new IndexOutOfBoundsException("Value x: " + x + " is out of matrix bounds.");
-        if (y >= size || y < 0) throw new IndexOutOfBoundsException("Value y: " + y + " is out of matrix bounds.");
+        if (x >= columns || x < 0) throw new IndexOutOfBoundsException("Value x: " + x + " is out of matrix bounds.");
+        if (y >= rows || y < 0) throw new IndexOutOfBoundsException("Value y: " + y + " is out of matrix bounds.");
         this.errors[x][y] = value;
     }
 
     /**
      * Zwraca sume bledow w danej kolumnie. Przydatne do obliczania bledow dla warstwy
-     * @param column - indeks kolumny.
+     * @param row - indeks kolumny.
      * @return - suma bledow
      */
-    public double getSumOfColumn(int column) {
-        if (column >= size || column < 0) throw new IndexOutOfBoundsException("Column value: " + column + " is out of matrix bounds.");
+    public double getSumOfRow(int row) {
+        if (row >= this.rows || row < 0) throw new IndexOutOfBoundsException("row value: " + row + " is out of matrix bounds.");
         double sum = 0;
-        for (int i = 0; i < size; i++) {
-            sum += errors[column][i];
+        for (int i = 0; i < columns; i++) {
+            sum += errors[i][row];
         }
         return sum;
     }
 
-    public int getSize() {
-        return size;
+
+    public int getColumns() {
+        return columns;
+    }
+
+    public int getRows() {
+        return rows;
     }
 
     @Override

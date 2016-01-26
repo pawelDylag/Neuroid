@@ -13,11 +13,13 @@ import java.util.Set;
 public class TrainDataSet {
 
     private Map<Integer, DataVector> dataset;
+    private final int outputVectorSize;
     private Random random;
 
-    public TrainDataSet() {
+    public TrainDataSet(int outputVectorSize) {
         this.dataset = new HashMap<>();
         this.random = new Random();
+        this.outputVectorSize = outputVectorSize;
     }
 
     public void add(DataVector d) {
@@ -31,5 +33,10 @@ public class TrainDataSet {
     public DataVector nextRandom() {
         int index = random.nextInt(dataset.size());
         return dataset.get(index);
+    }
+
+
+    public DataVector getPatternVector (int patternId) {
+        return new DataVector(patternId, outputVectorSize);
     }
 }

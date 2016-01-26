@@ -12,14 +12,17 @@ import fais.com.neuroid.Neural.Data.ErrorMatrix;
  */
 public class LastNeuronLayer extends NeuronLayer {
 
-    public LastNeuronLayer(int size, double sumOffset, double activationOffset, double learningOffset) {
-        super(size, sumOffset, activationOffset, learningOffset);
+    public LastNeuronLayer(int neuronInputSize, int size, double sumOffset, double activationOffset, double learningOffset) {
+        super(neuronInputSize, size,  sumOffset, activationOffset, learningOffset);
     }
 
     public ErrorMatrix train(DataVector trainData) {
-        if (trainData.getSize() != this.size) throw new IllegalStateException("Data vector has different size than this layer.");
+        if (trainData.getSize() != size)  throw new IllegalArgumentException("Data vector has different size ("
+                + trainData.getSize()
+                + ") than this layer input ("
+                + size + ")");
         // di = a * f(s) * (1-f(s)) * (A - I)
-        ErrorMatrix thisLayerErrors = new ErrorMatrix(size);
+        ErrorMatrix thisLayerErrors = new ErrorMatrix(size, neuronInputSize);
         // lecimy po wszystkich neuronach w tej warstwie
         for (int i = 0; i < this.size ; i++) {
             Neuron n = neurons.get(i);
@@ -28,7 +31,7 @@ public class LastNeuronLayer extends NeuronLayer {
             double neuronError = learningOffset * n.getLastOutput() * (1 - n.getLastOutput()) * (trainData.get(i) - n.getLastOutput());
             // tutaj generujemy sum(wi*di), zeby kolejna warstwa miala latwiej :)
             // i przy okazji updateujemy wage tego neurona
-            for (int j = 0; j < thisLayerErrors.getSize(); j++) {
+            for (int j = 0; j < neuronInputSize; j++) {
                 double sum = neuronError * n.getWeights()[j];
                 // set(kolumna dla tego neurona, jego kolejna suma, wartosc tej sumy)
                 thisLayerErrors.set(i, j, sum);
@@ -38,4 +41,7 @@ public class LastNeuronLayer extends NeuronLayer {
         }
         return thisLayerErrors;
     }
+
+
+
 }

@@ -1,0 +1,153 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="fais.com.neuroid.presentation.activities.LearnFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/radio_1"
+                android:text="A"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+            <CheckBox
+                android:id="@+id/radio_2"
+                android:text="B"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+            <CheckBox
+                android:id="@+id/radio_3"
+                android:text="C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_marginBottom="10dp">
+
+
+        <TextView
+            android:id="@+id/text_1_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Sum offset"
+            android:layout_alignParentStart="true"/>
+
+        <EditText
+            android:id="@+id/edit_text_1_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="1.0"
+            android:numeric="decimal"
+            android:layout_alignParentEnd="true"/>
+
+        <View
+            android:layout_below="@id/text_1_offset"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorCellBackground"/>
+
+        <TextView
+            android:id="@+id/text_2_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Learning offset"
+            android:layout_below="@id/text_1_offset"/>
+
+        <EditText
+            android:id="@+id/edit_text_2_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numeric="decimal"
+            android:text="1.0"
+            android:layout_margin="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/text_1_offset"/>
+
+        <View
+            android:layout_below="@id/text_2_offset"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorCellBackground"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Activation offset"
+            android:layout_below="@id/text_2_offset"/>
+
+        <EditText
+            android:id="@+id/edit_text_3_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:numeric="decimal"
+            android:text="1.0"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/text_2_offset"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button_learn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="LEARN!"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:background="@android:color/white"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/text_view_progress"
+            android:layout_width="0dp"
+            android:padding="20dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content" />
+
+        <ProgressBar
+            android:visibility="invisible"
+            android:padding="20dp"
+            android:id="@+id/loader"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+    
+</LinearLayout>
